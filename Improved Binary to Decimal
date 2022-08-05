@@ -1,0 +1,29 @@
+def whole_bd(n):
+    list = [int(i) for i in n]
+    list.reverse()
+
+    decimal = 0
+    for i in range(len(n)):
+        decimal += list[i]*2**i
+    print(decimal)
+
+num = input()
+
+if "." not in num:
+    whole_bd(num)
+    exit()
+list = num.split(".")
+list1 = [int(i) for i in list[0]]
+list2 = [int(i) for i in list[1]]
+
+list1.reverse()
+
+decimal = 0
+for i in range(len(list1)):
+    decimal += list1[i]*2**i
+
+
+for i in range(0,len(list2)):
+    decimal += list2[i]*2**(-i-1)
+
+print(decimal)
