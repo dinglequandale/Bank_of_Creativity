@@ -1,0 +1,16 @@
+from sympy import *
+
+x = symbols("x")
+f = x**2
+
+
+def tangent(func,x_coord):
+    diff_func = diff(f)
+    return diff_func.evalf(subs = {x: x_coord})*(x - x_coord) + f.evalf(subs = {x: x_coord})
+
+
+c = float(input("X-value of point: "))
+
+f_diff = tangent(f, c)
+
+plot(f, f_diff,(x, -20, 20))
