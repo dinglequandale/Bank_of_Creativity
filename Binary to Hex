@@ -1,0 +1,32 @@
+binary = input("Input your binary number: ")
+list1 = []
+for num in binary:
+    list1.append(int(num))
+
+list1.reverse()
+print(list)
+decimal = 0
+for i in range(len(list1)):
+    decimal += int(list1[i])*2**i
+
+max = 0
+divider = 16
+while decimal >= divider:
+    max += 1
+    divider *= 16
+
+temp_str1 = "ABCDEF"
+temp_str2 = "012345"
+d = {i:str(i) for i in range(10)}
+d_temp = {int(temp_str2[i]) + 10: temp_str1[i] for i in range(6)}
+d.update(d_temp)
+
+hex = ""
+remainder = int(str(decimal)[:])
+while max >= 0:
+    quotient = remainder // 16**max
+    remainder = remainder % 16**max
+    hex += d.get(quotient)
+    max -= 1
+
+print(hex)
