@@ -1,0 +1,78 @@
+class Node:
+    def __init__(self, value, next_value):
+        self.value = value
+        self.next_value = next_value
+
+
+class Slink:
+    def __init__(self, head):
+        self.head = head
+
+    def length(self):
+        counter = 0
+        x = self.head
+        while x != None:
+            x = x.next_value
+            counter += 1
+        return counter
+
+    def add_node(self, values: list):
+        for value in values:
+            x = self.head
+            while x.next_value != None:
+                x = x.next_value
+            y = Node(value, None)
+            x.next_value = y
+
+    def __str__(self):
+        result = ""
+        x = self.head
+
+        while x.next_value != None:
+            if self.length() == 1:
+                result += f"{str(self.head)}"
+                continue
+            else:
+                result += f"({str(x.value)})->"
+            x = x.next_value
+        result += f"({str(x.value)})"
+
+        return result
+
+    def get(self,index):
+        counter = 0
+        x = self.head
+        while counter != index:
+            x = x.next_value
+            counter += 1
+        return x
+
+    def get_tail(self):
+        x = self.head
+        while x.next_value != None:
+            x = x.next_value
+        return x
+
+    def insert(self, index, new_value):
+        x = self.get(index)
+        y = x.next_value
+        x.next_value = Node(new_value, y)
+
+    def prev_node(self, index):
+        return self.get(index - 1)
+
+    def reverse(self):
+        temp_list = []
+        for i in range(self.length()):
+            temp_list.append(self.get(i).value)
+        temp_list.reverse()
+        self.head = Node(temp_list[0], None)
+        for i in range(1, len(temp_list)):
+            self.add_node([temp_list[i]])
+
+linked_list = Slink(Node(2, Node(3, Node(5, Node(3, Node(10, Node("Hi", Node(["y","o"],None))))))))
+print(linked_list.length())
+
+print(linked_list)
+linked_list.reverse()
+print(linked_list)
