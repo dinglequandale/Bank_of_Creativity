@@ -1,0 +1,24 @@
+import numpy as np
+from sympy import *
+import math
+
+x = symbols("x")
+
+taylor = 0
+
+n = int(input("Degree of Taylor polynomial: "))
+
+f = cos(x)
+
+for i in range(n+1):
+    high_diff = f
+    j = i
+    while j >= 1:
+        high_diff = diff(high_diff)
+        j -= 1
+    coeff = (high_diff.evalf(subs={x: 0}))/(factorial(i))
+    taylor += coeff*x**i
+
+print(taylor)
+
+plot(taylor, f, (x, -5, 5))
