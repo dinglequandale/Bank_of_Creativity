@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+class physics:
+    def __init__(self, velocity, angle, position):
+        self.vel = velocity
+        self.ang = angle
+        self.pos = position
+        self.g = 9.81
+
+    def range(self):
+        return (self.vel**2 * np.sin(2*self.ang))/self.g
+
+    def a(self):
+        R = self.range()
+        return (-4*np.cos(self.ang))/R
+
+
+func = physics(11, math.radians(10), 10)
+
+
+def f(x):
+    a = func.a()
+    R = func.range()
+    return a*(x - R/2)**2 + R*np.cos(func.ang) + func.pos
+
+
+R = func.range()
+x = np.linspace(0, R, 100)
+
+plt.plot(x, f(x), color='red')
+
+plt.show()
