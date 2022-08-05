@@ -1,0 +1,27 @@
+from __future__ import division
+from sympy import *
+
+x = symbols("x")
+u = symbols('u')
+
+f = x**2
+
+n = int(input("Num of rectangles: "))
+l_bound = float(input("Lower bound: "))
+u_bound = float(input("Upper bound: "))
+width = (u_bound - l_bound) / n
+
+approx_area = 0
+
+p1 = plot(f, show=False)
+for i in range(n):
+    length = f.evalf(subs={x: l_bound + width*i})
+    p2 = plot_parametric((u, 0, (u, l_bound + i*width, l_bound + (i+1)*width)),
+                              (u, length, (u, l_bound + i*width, l_bound + (i+1)*width)),
+                              (l_bound + i*width, u, (u, 0, length)),
+                              (l_bound + (i+1)*width, u, (u, 0, length)), show=False)
+    p1.extend(p2)
+    approx_area += length*width
+
+print(approx_area)
+p1.show()
