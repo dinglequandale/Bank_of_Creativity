@@ -1,0 +1,43 @@
+l = []
+
+while True:
+    num = input("Write \"stop\" when done")
+    try:
+        int(num)
+    except:
+        break
+    l.append(int(num))
+l.sort()
+
+print(f"Your sorted list: {l}")
+n = int(input("Which number would you like to find in this list? "))
+
+
+def mid(lit: list):
+    if len(lit) % 2 == 1:
+        return lit[int((len(lit) - 1)/2)]
+    else:
+        return lit[int(len(lit)/2)]
+
+
+new_l = l[:]
+print(new_l)
+
+count = 1
+while len(l) != 1:
+    if len(new_l) == 1 and n not in new_l:
+        print("Your number is not in the list!")
+        exit()
+    m = mid(new_l)
+    if m == n:
+        break
+    if n < m:
+        new_l = new_l[0:new_l.index(m)]
+    else:
+        new_l = new_l[new_l.index(m):]
+        print(new_l)
+    count += 1
+
+print(f"Final list: {new_l}")
+
+print(f"Count: {count}")
