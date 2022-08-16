@@ -1,0 +1,48 @@
+arr = []
+
+while True:
+    num = input("Write \"stop\" when done")
+    try:
+        int(num)
+    except:
+        break
+    arr.append(int(num))
+
+
+not_set = set()
+for index in range(len(arr)):
+    count = 1
+    jump = index
+    while jump != len(arr) - 1 and True:
+        new_arr = arr[jump+1:]
+
+        if count % 2 == 1:
+            new_new_arr = []
+            new_arr_indices = []
+            for i in range(len(new_arr)):
+                if new_arr[i] >= arr[jump]:
+                    new_new_arr.append(new_arr[i])
+                    new_arr_indices.append(i)
+            new_arr = new_new_arr[:]
+            if new_arr == []:
+                break
+
+            jump += 1 + new_arr_indices[new_arr.index(min(new_arr))]
+
+        else:
+            new_new_arr = []
+            new_arr_indices = []
+            for i in range(len(new_arr)):
+                if new_arr[i] <= arr[jump]:
+                    new_new_arr.append(new_arr[i])
+                    new_arr_indices.append(i)
+            new_arr = new_new_arr[:]
+            if new_arr == []:
+                not_set.add(index)
+                break
+
+            jump += 1 + new_arr_indices[new_arr.index(max(new_arr))]
+        count += 1
+
+final_set = {i for i in range(len(arr))} - not_set
+print(len(final_set))
