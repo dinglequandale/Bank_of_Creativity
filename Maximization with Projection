@@ -1,0 +1,54 @@
+import sympy as sym
+import math
+from sympy.plotting import plot
+
+x = sym.Symbol("x")
+
+# One can input any function 'f' that is a member of the vector space 
+# of all continuous real-valued functions on the interval [-pi,pi]
+
+f = sym.sin(x)
+
+n = int(input("Input the degree of approximation: "))
+
+def norm(v):
+    return sym.sqrt(abs(sym.integrate(v**2, (x, -sym.pi,sym.pi))))
+
+def inner_product(v1,v2):
+    return sym.integrate(v1*v2, (x, -sym.pi, sym.pi))
+
+basis = [x**i for i in range(1,n+1)]
+basis.insert(0,1/(norm(1)))
+
+
+# Recursively-defined Gram-Schmidt algorithm
+
+inductor = 1
+def gram_schmidt(ind):
+    global basis
+    global inductor
+    if inductor == n+1:
+        return basis
+    else:
+        new_basis_vector = basis[inductor]
+        for i in range(inductor):
+            new_basis_vector -= inner_product(basis[inductor],basis[i])*basis[i]
+        basis[inductor] = new_basis_vector/(norm(new_basis_vector))
+        inductor += 1
+        gram_schmidt(inductor)
+
+gram_schmidt(inductor)
+        
+print(f"The orthonormal basis of our subspace of polynomials of max degree n (produced by Gram-Schmidt):\n {basis}")
+
+approximation = 0
+
+for i in range(n+1):
+    approximation += inner_product(basis[i],f)*basis[i]
+
+print(f"The polynomial of max degree n approximating sin(x):\n {approximation}")
+
+p1 = plot(f, (x, -sym.pi, sym.pi), show=False)
+p2 = plot(approximation, (x, -sym.pi, sym.pi), show=False)
+p1.append(p2[0])
+p1.show()
